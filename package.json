@@ -1,0 +1,24 @@
+{
+  "name": "roadster-server",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "pg": "^7.4.1",
+    "ts-node": "^5.0.1"
+  },
+  "scripts": {
+    "start": "ts-node server"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.3",
+    "@types/node": "^9.6.4",
+    "@types/passport-google-oauth": "^1.0.38",
+    "@types/pg": "^7.4.5",
+    "typescript": "^2.8.1"
+  }
+}
