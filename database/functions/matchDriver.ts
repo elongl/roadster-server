@@ -1,4 +1,5 @@
 import executeQuery from '../helpers/executeQuery';
+import MatchedDriver from '../ORM/MatchedDriver';
 
 export default function matchDriver(matchedDriver: MatchedDriver) {
   const { rideId, driverId } = matchedDriver;
@@ -7,8 +8,4 @@ export default function matchDriver(matchedDriver: MatchedDriver) {
     values: [rideId, driverId]
   };
   executeQuery(query);
-}
-export interface MatchedDriver {
-  rideId: number;
-  driverId: number;
 }

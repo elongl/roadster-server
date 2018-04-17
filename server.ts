@@ -2,24 +2,29 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
-import addUser, { UserDetails } from './database/functions/addUser';
-import addRide, { RideDetails, Location } from './database/functions/addRide';
-import matchDriver, { MatchedDriver } from './database/functions/matchDriver';
+import addRide from './database/functions/addRide';
+import matchDriver from './database/functions/matchDriver';
 import availableDrivers from './database/views/availableDrivers';
 import waitingRides from './database/views/waitingRides';
 import closestRides from './database/views/closestRides';
 import registerStrategies from './authentication/registerStrategies';
+import UserDetails from './database/ORM/UserDetails';
+import RideDetails from './database/ORM/RideDetails';
+import Location from './database/ORM/Location';
+import MatchedDriver from './database/ORM/MatchedDriver';
+
+require('dotenv').config();
+registerStrategies();
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
 
-require('dotenv').config();
-registerStrategies();
-
-app.post('/user', (req, res) => {
-  const user: UserDetails = req.body;
-  addUser(user);
+passport.serializeUser((user: UserDetails, done) => {
+  console.log('Serializing...');
+  done(null, user);
 });
 
 app.post('/ride', (req, res) => {
@@ -50,6 +55,10 @@ app.get('/closestrides/:longitude/:latitude', async (req, res) => {
 
 app.get(
   '/auth/google',
+  (req, res, next) => {
+    console.log('Requested');
+    next();
+  },
   passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/plus.login']
   })
@@ -57,9 +66,10 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    console.log('Callback');
+    res.redirect('http://localhost:3000');
   }
 );
 

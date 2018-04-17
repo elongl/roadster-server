@@ -1,24 +1,27 @@
 import passport from 'passport';
+import addUser from '../database/functions/addUser';
+import OAuthUserDetails from '../database/ORM/OAuthUserDetails';
 import {
   OAuth2Strategy as googleAuth,
   IOAuth2StrategyOption
 } from 'passport-google-oauth';
 
-const googleConfig: IOAuth2StrategyOption = {
-  clientID: process.env.GOOGLE_CLIENT_ID || 'google client id undefined',
-  clientSecret:
-    process.env.GOOGLE_CLIENT_SECRET || 'google client secret undefined',
-  callbackURL:
-    process.env.GOOGLE_CALLBACK_URL || 'google callback url undefined'
-};
+export default async function regusterGoogleStrategy() {
+  const googleConfig: IOAuth2StrategyOption = {
+    clientID: process.env.GOOGLE_CLIENT_ID || 'client id undefined',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'client secret undefined',
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || 'callback url undefined'
+  };
 
-export default function regusterGoogleStrategy() {
   passport.use(
     new googleAuth(googleConfig, (accessToken, refreshToken, profile, done) => {
-      console.log('Access Token:', accessToken);
-      console.log('Refresh Token:', refreshToken);
-      console.log('Profile:', profile);
-      console.log('Done:', done);
+      const user: OAuthUserDetails = {
+        displayName: profile.displayName,
+        oauthId: profile.id,
+        oauthProvider: profile.provider
+      };
+      console.log('Strategy');
+      done(null, user);
     })
   );
 }

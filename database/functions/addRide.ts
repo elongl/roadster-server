@@ -1,4 +1,5 @@
 import executeQuery from '../helpers/executeQuery';
+import RideDetails from '../ORM/RideDetails';
 
 export default function addRide(ride: RideDetails) {
   const { riderId, startPoint, endPoint } = ride;
@@ -12,14 +13,4 @@ export default function addRide(ride: RideDetails) {
     ]
   };
   executeQuery(query);
-}
-
-export interface Location {
-  longitude: number;
-  latitude: number;
-}
-export interface RideDetails {
-  riderId: number;
-  startPoint: Location;
-  endPoint: Location;
 }
