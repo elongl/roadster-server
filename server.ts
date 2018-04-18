@@ -23,8 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser((user: UserDetails, done) => {
-  console.log('Serializing...');
-  done(null, user);
+  done(null, { oauthId: user.oauthId, oauthProvider: user.oauthProvider });
 });
 
 app.post('/ride', (req, res) => {
@@ -53,12 +52,10 @@ app.get('/closestrides/:longitude/:latitude', async (req, res) => {
   res.send(rides);
 });
 
+app.get('user', (req, res) => res.send(req.user));
+
 app.get(
   '/auth/google',
-  (req, res, next) => {
-    console.log('Requested');
-    next();
-  },
   passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/plus.login']
   })
@@ -68,8 +65,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    console.log('Callback');
-    res.redirect('http://localhost:3000');
+    res.redirect('http://localhost:3000/authenticate/2');
   }
 );
 

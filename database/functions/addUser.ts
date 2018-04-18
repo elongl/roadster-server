@@ -1,12 +1,12 @@
 import executeQuery from '../helpers/executeQuery';
-import UserDetails from '../ORM/UserDetails';
+import OAuthUserDetails from '../ORM/OAuthUserDetails';
 
-export default function addUser(user: UserDetails) {
-  const { displayName, phoneNumber, isDriver, oauthId, oauthProvider } = user;
+export default function addUser(user: OAuthUserDetails) {
+  const { displayName, oauthId, oauthProvider } = user;
   const query = {
-    text: `WITH userinsert AS (INSERT INTO users(display_name, phone_number, is_driver) VALUES ($1, $2, $3) RETURNING id)
+    text: `WITH userinsert AS (INSERT INTO users(display_name) VALUES ($1, $2, $3) RETURNING id)
            INSERT INTO oauth(user_id, oauth_id, oauth_provider) VALUES ((SELECT id FROM userinsert), $4, $5);`,
-    values: [displayName, phoneNumber, isDriver, oauthId, oauthProvider]
+    values: [displayName, oauthId, oauthProvider]
   };
   executeQuery(query);
 }
