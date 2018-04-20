@@ -1,11 +1,11 @@
 import passport from 'passport';
 import OAuthUserDetails from '../database/ORM/OAuthUserDetails';
 import {
-  OAuth2Strategy as googleAuth,
+  OAuth2Strategy as GoogleStrategy,
   IOAuth2StrategyOption
 } from 'passport-google-oauth';
 
-export default function regusterGoogleStrategy() {
+export default function googleAuth() {
   const googleConfig: IOAuth2StrategyOption = {
     clientID: process.env.GOOGLE_CLIENT_ID || 'client id undefined',
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'client secret undefined',
@@ -13,14 +13,16 @@ export default function regusterGoogleStrategy() {
   };
 
   passport.use(
-    new googleAuth(googleConfig, (accessToken, refreshToken, profile, done) => {
-      const user: OAuthUserDetails = {
-        displayName: profile.displayName,
-        oauthId: profile.id,
-        oauthProvider: profile.provider
-      };
-      console.log(user);
-      done(null, user);
-    })
+    new GoogleStrategy(
+      googleConfig,
+      (accessToken, refreshToken, profile, done) => {
+        const user: OAuthUserDetails = {
+          displayName: profile.displayName,
+          oauthId: profile.id,
+          oauthProvider: profile.provider
+        };
+        done(null, user);
+      }
+    )
   );
 }

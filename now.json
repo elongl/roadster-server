@@ -1,0 +1,5 @@
+{
+  "alias": "roadster-server",
+  "dotenv": true,
+  "public": true
+}
