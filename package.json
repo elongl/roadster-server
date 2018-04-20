@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "pg": "^7.4.1",
@@ -15,6 +17,8 @@
     "start": "ts-node server"
   },
   "devDependencies": {
+    "@types/express-session": "^1.15.8",
+    "@types/cookie-parser": "^1.4.1",
     "@types/cors": "^2.8.3",
     "@types/node": "^9.6.4",
     "@types/passport-google-oauth": "^1.0.38",

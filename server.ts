@@ -1,4 +1,6 @@
 import express from 'express';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
@@ -19,11 +21,22 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(
+  session({ secret: 'keyboard cat', resave: false, saveUninitialized: false })
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser((user: UserDetails, done) => {
-  done(null, { oauthId: user.oauthId, oauthProvider: user.oauthProvider });
+  console.log('Serialize', user);
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  console.log('Deserialize', user);
+  done(null, user);
 });
 
 app.post('/ride', (req, res) => {
@@ -52,7 +65,10 @@ app.get('/closestrides/:longitude/:latitude', async (req, res) => {
   res.send(rides);
 });
 
-app.get('user', (req, res) => res.send(req.user));
+app.get('/user', (req, res) => {
+  console.log('User Requested', req.user);
+  res.send(req.user);
+});
 
 app.get(
   '/auth/google',
@@ -65,7 +81,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('http://localhost:3000/authenticate/2');
+    res.redirect('http://localhost:3000/authenticate');
   }
 );
 
