@@ -1,7 +1,8 @@
 export default interface UserDetails {
   displayName: string;
-  phoneNumber: string;
-  isDriver: boolean;
+  phoneNumber: string | undefined;
+  isDriver: boolean | undefined;
   oauthId: string;
   oauthProvider: string;
+  avatar: string;
 }
