@@ -12,11 +12,10 @@ import RideDetails from './database/ORM/RideDetails';
 import Location from './database/ORM/Location';
 import MatchedDriver from './database/ORM/MatchedDriver';
 import middlewares from './middlewares';
+const app = express();
 authConfig();
 
-const app = express();
 app.use(middlewares);
-
 app.use('/auth', authRoutes);
 
 app.post('/ride', (req, res) => {

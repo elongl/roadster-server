@@ -6,6 +6,7 @@ import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { googleConfig, facebookConfig, twitterConfig } from './authConfig';
 import addUser from '../database/functions/addUser';
 import UserDetails from '../database/ORM/UserDetails';
+import findUserById from '../database/functions/findUserById';
 
 export default function registerStrategies() {
   passport.use(new GoogleStrategy(googleConfig, verify));
@@ -13,19 +14,21 @@ export default function registerStrategies() {
   passport.use(new TwitterStrategy(twitterConfig, verify));
 }
 
-function verify(
+async function verify(
   accessToken: string,
   refreshToken: string,
   profile: Profile,
   done: (error: any, user?: any) => void
 ) {
-  console.log(profile);
-  // const authUser: OAuthUserDetails = {
-  //   oauthId: profile.id,
-  //   oauthProvider: profile.provider
-  // };
-  // const user: UserDetails = {
-  //   displayName: profile.displayName,
-  //   avatar: profile.photos && profile.photos[0].value
-  // };
+  const authUser: OAuthUserDetails = {
+    oauthId: profile.id,
+    oauthProvider: profile.provider
+  };
+  const user: UserDetails = {
+    displayName: profile.displayName,
+    avatar: profile.photos && profile.photos[0].value
+  };
+  const existingUser = await findUserById(authUser);
+  if (existingUser && existingUser.length === 0) addUser(user, authUser);
+  done(null, authUser);
 }
