@@ -4,18 +4,18 @@ import { IOAuth2StrategyOption } from 'passport-google-oauth';
 import { StrategyOption } from 'passport-facebook';
 import { IStrategyOption } from 'passport-twitter';
 import registerStrategies from './registerStrategies';
+
 export default function config() {
   passport.serializeUser((user: OAuthUserDetails, done) => {
     console.log('Serializing', user);
-    done(null, { oauthId: user.oauthId, oauthProvider: user.oauthProvider });
+    // done(null, { oauthId: user.oauthId, oauthProvider: user.oauthProvider });
   });
 
   passport.deserializeUser((user, done) => {
     // Make query to retrieve actual user.
     console.log('Deserializing', user);
-    done(null, user);
+    // done(null, user);
   });
-
   registerStrategies();
 }
 
