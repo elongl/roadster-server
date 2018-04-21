@@ -9,17 +9,17 @@ app.get('/user', (req, res) => {
 
 app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 app.get('/google/callback', passport.authenticate('google'), (req, res) => {
-  res.redirect('http://localhost:3000/oauth');
+  res.redirect(process.env.CLIENT_URL as string);
 });
 
 app.get('/facebook', passport.authenticate('facebook'));
 app.get('/facebook/callback', passport.authenticate('facebook'), (req, res) => {
-  res.redirect('http://localhost:3000/oauth');
+  res.redirect(process.env.CLIENT_URL as string);
 });
 
 app.get('/twitter', passport.authenticate('twitter'));
 app.get('/twitter/callback', passport.authenticate('twitter'), (req, res) => {
-  res.redirect('http://localhost:3000/oauth');
+  res.redirect(process.env.CLIENT_URL as string);
 });
 
 export default app;
