@@ -2,24 +2,24 @@ import express from 'express';
 import passport from 'passport';
 const app = express.Router();
 
-// Add success / failure redirects.
 app.get('/user', (req, res) => {
   res.send(req.user);
 });
+const redirectObject = {
+  successRedirect: process.env.CLIENT_URL,
+  failureRedirect: process.env.CLIENT_URL + '/login'
+};
 
 app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
-app.get('/google/callback', passport.authenticate('google'), (req, res) => {
-  res.redirect(process.env.CLIENT_URL as string);
-});
+app.get('/google/callback', passport.authenticate('google', redirectObject));
 
 app.get('/facebook', passport.authenticate('facebook'));
-app.get('/facebook/callback', passport.authenticate('facebook'), (req, res) => {
-  res.redirect(process.env.CLIENT_URL as string);
-});
+app.get(
+  '/facebook/callback',
+  passport.authenticate('facebook', redirectObject)
+);
 
 app.get('/twitter', passport.authenticate('twitter'));
-app.get('/twitter/callback', passport.authenticate('twitter'), (req, res) => {
-  res.redirect(process.env.CLIENT_URL as string);
-});
+app.get('/twitter/callback', passport.authenticate('twitter', redirectObject));
 
 export default app;
