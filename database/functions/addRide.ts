@@ -1,7 +1,7 @@
 import executeQuery from '../helpers/executeQuery';
 import RideDetails from '../ORM/RideDetails';
 
-export default function addRide(ride: RideDetails) {
+export default async function addRide(ride: RideDetails) {
   const { riderId, startPoint, endPoint } = ride;
   const query = {
     text:
@@ -12,5 +12,5 @@ export default function addRide(ride: RideDetails) {
       `(${endPoint.longitude}, ${endPoint.latitude})`
     ]
   };
-  executeQuery(query);
+  await executeQuery(query);
 }
