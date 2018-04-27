@@ -21,12 +21,12 @@ app.use('/auth', authRoutes);
 
 app.post('/ride', (req, res) => {
   const ride: RideDetails = req.body;
-  addRide(ride).then(() => res.send(200), err => res.send(err));
+  addRide(ride).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 app.patch('/matchdriver', (req, res) => {
   const matchedDriver: MatchedDriver = req.body;
-  matchDriver(matchedDriver).then(() => res.send(200), err => res.send(err));
+  matchDriver(matchedDriver).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 app.get('/availabledrivers', (req, res) => {
