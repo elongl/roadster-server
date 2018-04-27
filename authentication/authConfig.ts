@@ -32,7 +32,6 @@ export const facebookConfig: FacebookOption = {
 
 export const twitterConfig: TwitterOption = {
   consumerKey: process.env.TWITTER_CONSUMER_KEY || 'consumer key undefined',
-  consumerSecret:
-    process.env.TWITTER_CONSUMER_SECRET || 'consumer secret undefined',
+  consumerSecret: process.env.TWITTER_CONSUMER_SECRET || 'consumer secret undefined',
   callbackURL: process.env.TWITTER_CALLBACK_URL || 'callback url undefined'
 };

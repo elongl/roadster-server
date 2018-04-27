@@ -21,28 +21,25 @@ app.use('/auth', authRoutes);
 
 app.post('/ride', (req, res) => {
   const ride: RideDetails = req.body;
-  addRide(ride).then(() => res.send(200), (err: Error) => res.send(err));
+  addRide(ride).then(() => res.send(200), err => res.send(err));
 });
 
 app.patch('/matchdriver', (req, res) => {
   const matchedDriver: MatchedDriver = req.body;
-  matchDriver(matchedDriver).then(
-    () => res.send(200),
-    (err: Error) => res.send(err)
-  );
+  matchDriver(matchedDriver).then(() => res.send(200), err => res.send(err));
 });
 
 app.get('/availabledrivers', (req, res) => {
   availableDrivers().then(
     (drivers: UserDetails[] | undefined) => res.send(drivers),
-    (err: Error) => res.send(err)
+    err => res.send(err)
   );
 });
 
 app.get('/waitingrides', (req, res) => {
   waitingRides().then(
     (rides: RideDetails[] | undefined) => res.send(rides),
-    (err: Error) => res.send(err)
+    err => res.send(err)
   );
 });
 
@@ -50,7 +47,7 @@ app.get('/closestrides/:longitude/:latitude', (req, res) => {
   const location: Location = req.params;
   closestRides(location).then(
     (rides: RideDetails[] | undefined) => res.send(rides),
-    (err: Error) => res.send(err)
+    err => res.send(err)
   );
 });
 
