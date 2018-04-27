@@ -24,12 +24,12 @@
     "@types/cookie-session": "^2.0.34",
     "@types/cors": "^2.8.3",
     "@types/dotenv": "^4.0.3",
-    "@types/node": "^9.6.6",
+    "@types/node": "^10.0.0",
     "@types/passport-facebook": "^2.1.8",
     "@types/passport-google-oauth": "^1.0.38",
     "@types/passport-twitter": "^1.0.34",
     "@types/pg": "^7.4.5",
-    "typescript": "^2.8.1"
+    "typescript": "^2.8.3"
   },
   "now": {
     "alias": "roadster-server",

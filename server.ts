@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
+require('dotenv').config();
 import express from 'express';
 import addRide from './database/functions/addRide';
 import matchDriver from './database/functions/matchDriver';
@@ -21,25 +20,28 @@ app.use('/auth', authRoutes);
 
 app.post('/ride', (req, res) => {
   const ride: RideDetails = req.body;
-  addRide(ride).then(() => res.sendStatus(200), err => res.send(err));
+  addRide(ride).then(() => res.sendStatus(200), err => res.send(err.message));
 });
 
 app.patch('/matchdriver', (req, res) => {
   const matchedDriver: MatchedDriver = req.body;
-  matchDriver(matchedDriver).then(() => res.sendStatus(200), err => res.send(err));
+  matchDriver(matchedDriver).then(
+    () => res.sendStatus(200),
+    err => res.send(err.meesage)
+  );
 });
 
 app.get('/availabledrivers', (req, res) => {
   availableDrivers().then(
     (drivers: UserDetails[] | undefined) => res.send(drivers),
-    err => res.send(err)
+    err => res.send(err.message)
   );
 });
 
 app.get('/waitingrides', (req, res) => {
   waitingRides().then(
     (rides: RideDetails[] | undefined) => res.send(rides),
-    err => res.send(err)
+    err => res.send(err.message)
   );
 });
 
@@ -47,7 +49,7 @@ app.get('/closestrides/:longitude/:latitude', (req, res) => {
   const location: Location = req.params;
   closestRides(location).then(
     (rides: RideDetails[] | undefined) => res.send(rides),
-    err => res.send(err)
+    err => res.send(err.message)
   );
 });
 
