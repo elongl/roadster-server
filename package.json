@@ -12,7 +12,9 @@
     "passport-google-oauth": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "pg": "^7.4.1",
-    "ts-node": "^5.0.1"
+    "ts-node": "^5.0.1",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.mapkeys": "^4.6.0"
   },
   "scripts": {
     "start": "ts-node server",
@@ -24,6 +26,8 @@
     "@types/cookie-session": "^2.0.34",
     "@types/cors": "^2.8.3",
     "@types/dotenv": "^4.0.3",
+    "@types/lodash.camelcase": "^4.3.3",
+    "@types/lodash.mapkeys": "^4.6.3",
     "@types/node": "^10.0.0",
     "@types/passport-facebook": "^2.1.8",
     "@types/passport-google-oauth": "^1.0.38",
