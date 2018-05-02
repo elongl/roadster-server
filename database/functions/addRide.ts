@@ -1,5 +1,5 @@
 import executeQuery from '../helpers/executeQuery';
-import RideDetails from '../ORM/RideDetails';
+import RideDetails from '../typing/RideDetails';
 
 export default async function addRide(ride: RideDetails) {
   const { riderId, startPoint, endPoint } = ride;

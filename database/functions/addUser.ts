@@ -1,11 +1,8 @@
 import executeQuery from '../helpers/executeQuery';
-import UserDetails from '../ORM/UserDetails';
-import OAuthUserDetails from '../ORM/OAuthUserDetails';
+import UserDetails from '../typing/UserDetails';
+import OAuthUserDetails from '../typing/OAuthUserDetails';
 
-export default async function addUser(
-  user: UserDetails,
-  authUser: OAuthUserDetails
-) {
+export default async function addUser(user: UserDetails, authUser: OAuthUserDetails) {
   const { displayName, phoneNumber, avatar, isDriver } = user;
   const { oauthId, oauthProvider } = authUser;
   const query = {

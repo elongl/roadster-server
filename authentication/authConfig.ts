@@ -1,4 +1,4 @@
-import OAuthUserDetails from '../database/ORM/OAuthUserDetails';
+import OAuthUserDetails from '../database/typing/OAuthUserDetails';
 import passport from 'passport';
 import { IOAuth2StrategyOption as GoogleOption } from 'passport-google-oauth';
 import { StrategyOption as FacebookOption } from 'passport-facebook';
