@@ -12,6 +12,7 @@ import Location from './database/typings/Location';
 import MatchedDriver from './database/typings/MatchedDriver';
 import UserDetails from './database/typings/UserDetails';
 import middlewares from './middlewares';
+import updateUser from './database/functions/updateUser';
 const app = express();
 authConfig();
 
@@ -26,6 +27,14 @@ app.post('/ride', (req, res) => {
 app.patch('/matchdriver', (req, res) => {
   const matchedDriver: MatchedDriver = req.body;
   matchDriver(matchedDriver).then(
+    () => res.sendStatus(200),
+    err => res.send(err.meesage)
+  );
+});
+
+app.patch('/user', (req, res) => {
+  const newUser = req.body;
+  updateUser(newUser.id, newUser.changedProperties).then(
     () => res.sendStatus(200),
     err => res.send(err.meesage)
   );
