@@ -3,7 +3,7 @@ import passport from 'passport';
 const app = express.Router();
 
 app.get('/user', (req, res) => {
-  if (req.user === undefined) res.sendStatus(404);
+  if (req.user === undefined) res.sendStatus(401);
   else res.send(req.user);
 });
 

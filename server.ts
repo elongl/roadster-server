@@ -28,7 +28,7 @@ app.patch('/matchdriver', (req, res) => {
   const matchedDriver: MatchedDriver = req.body;
   matchDriver(matchedDriver).then(
     () => res.sendStatus(200),
-    err => res.send(err.meesage)
+    err => res.send(err.message)
   );
 });
 
@@ -36,7 +36,7 @@ app.patch('/user', (req, res) => {
   const updatedUser = req.body;
   updateUser(updatedUser.id, updatedUser.changedProperties).then(
     () => res.sendStatus(200),
-    err => res.send(err.meesage)
+    err => res.send(err.message)
   );
 });
 

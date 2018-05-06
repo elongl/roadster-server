@@ -11,9 +11,9 @@ export default function config() {
     done(null, user);
   });
 
-  passport.deserializeUser((authUser: OAuthUserDetails, done) =>
-    findUserById(authUser).then(user => done(null, user))
-  );
+  passport.deserializeUser((authUser: OAuthUserDetails, done) => {
+    findUserById(authUser).then(user => user !== undefined && done(null, user));
+  });
   registerStrategies();
 }
 
