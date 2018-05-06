@@ -15,7 +15,7 @@
     "passport-google-oauth": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "pg": "^7.4.1",
-    "ts-node": "^5.0.1"
+    "ts-node": "^6.0.3"
   },
   "scripts": {
     "start": "ts-node server",

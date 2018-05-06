@@ -1,4 +1,4 @@
-import { Location } from '../functions/addRide';
+import Location from '../typings/Location';
 import executeQuery from '../helpers/executeQuery';
 export default async function closestRides(location: Location) {
   const query = {
