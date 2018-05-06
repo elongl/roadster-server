@@ -1,5 +1,5 @@
 import executeQuery from '../helpers/executeQuery';
-import MatchedDriver from '../types/MatchedDriver';
+import MatchedDriver from '../typings/MatchedDriver';
 
 export default async function matchDriver(matchedDriver: MatchedDriver) {
   const { rideId, driverId } = matchedDriver;
