@@ -11,10 +11,9 @@ export default function config() {
     done(null, user);
   });
 
-  passport.deserializeUser(async (authUser: OAuthUserDetails, done) => {
-    const user = await findUserById(authUser);
-    done(null, user);
-  });
+  passport.deserializeUser((authUser: OAuthUserDetails, done) =>
+    findUserById(authUser).then(user => done(null, user))
+  );
   registerStrategies();
 }
 
