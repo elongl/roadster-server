@@ -7,11 +7,11 @@ import authRoutes from './authentication/authRoutes';
 import waitingRides from './database/views/waitingRides';
 import closestRides from './database/views/closestRides';
 import authConfig from './authentication/authConfig';
-import RideDetails from './database/typing/RideDetails';
-import Location from './database/typing/Location';
-import MatchedDriver from './database/typing/MatchedDriver';
+import RideDetails from './database/types/RideDetails';
+import Location from './database/types/Location';
+import MatchedDriver from './database/types/MatchedDriver';
+import UserDetails from './database/types/UserDetails';
 import middlewares from './middlewares';
-import UserDetails from './database/typing/UserDetails';
 const app = express();
 authConfig();
 

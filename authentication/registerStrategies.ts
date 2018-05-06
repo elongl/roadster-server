@@ -1,11 +1,11 @@
 import passport, { Profile } from 'passport';
-import OAuthUserDetails from '../database/typing/OAuthUserDetails';
+import OAuthUserDetails from '../database/types/OAuthUserDetails';
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { googleConfig, facebookConfig, twitterConfig } from './authConfig';
 import addUser from '../database/functions/addUser';
-import UserDetails from '../database/typing/UserDetails';
+import UserDetails from '../database/types/UserDetails';
 import findUserById from '../database/functions/findUserById';
 
 export default function registerStrategies() {

@@ -1,6 +1,6 @@
-import OAuthUserDetails from '../typing/OAuthUserDetails';
+import OAuthUserDetails from '../types/OAuthUserDetails';
 import executeQuery from '../helpers/executeQuery';
-import UserDetails from '../typing/UserDetails';
+import UserDetails from '../types/UserDetails';
 export default async function findUserById(
   user: OAuthUserDetails
 ): Promise<UserDetails | undefined> {
