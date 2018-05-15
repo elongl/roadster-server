@@ -33,8 +33,9 @@ app.patch('/matchdriver', (req, res) => {
 });
 
 app.patch('/user', (req, res) => {
-  const updatedUser = req.body;
-  updateUser(updatedUser.id, updatedUser.changedProperties).then(
+  const changedProperties = req.body;
+  const userId = req.user && req.user.id;
+  updateUser(userId, changedProperties).then(
     () => res.sendStatus(200),
     err => res.send(err.message)
   );

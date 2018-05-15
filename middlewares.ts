@@ -6,8 +6,8 @@ const middlewares = [
   cors({ origin: process.env.CLIENT_URL, credentials: true }),
   bodyParser.json(),
   cookieSession({
-    name: 'session',
-    maxAge: 24 * 60 * 60 * 1000,
+    name: 'user-session',
+    maxAge: 10 * 365 * 24 * 60 * 60 * 100,
     secret: 'My Secret World'
   }),
   passport.initialize(),

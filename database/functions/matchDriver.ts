@@ -1,6 +1,7 @@
 import executeQuery from '../helpers/executeQuery';
 import MatchedDriver from '../typings/MatchedDriver';
 
+// Make sure rideId comes from the user session.
 export default async function matchDriver(matchedDriver: MatchedDriver) {
   const { rideId, driverId } = matchedDriver;
   const query = {
