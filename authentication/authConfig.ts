@@ -4,7 +4,7 @@ import { IOAuth2StrategyOption as GoogleOption } from 'passport-google-oauth';
 import { StrategyOption as FacebookOption } from 'passport-facebook';
 import { IStrategyOption as TwitterOption } from 'passport-twitter';
 import registerStrategies from './registerStrategies';
-import findUserById from '../database/functions/findUserById';
+import findUserByOAuth from '../database/functions/findUserByOAuth';
 
 export default function config() {
   passport.serializeUser((user: OAuthUserDetails, done) => {
@@ -12,7 +12,7 @@ export default function config() {
   });
 
   passport.deserializeUser((authUser: OAuthUserDetails, done) => {
-    findUserById(authUser).then(user => user !== undefined && done(null, user));
+    findUserByOAuth(authUser).then(user => user !== undefined && done(null, user));
   });
   registerStrategies();
 }

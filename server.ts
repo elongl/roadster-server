@@ -13,6 +13,7 @@ import MatchedDriver from './database/typings/MatchedDriver';
 import UserDetails from './database/typings/UserDetails';
 import middlewares from './middlewares';
 import updateUser from './database/functions/updateUser';
+import findUserById from './database/functions/findUserById';
 const app = express();
 authConfig();
 
@@ -61,6 +62,11 @@ app.get('/closestrides/:longitude/:latitude', (req, res) => {
     (rides: RideDetails[] | undefined) => res.send(rides),
     err => res.send(err.message)
   );
+});
+
+app.get('/user/:id', async (req, res) => {
+  const user = await findUserById(req.params.id);
+  res.send(user);
 });
 
 app.listen(8080, () => console.log('Listening on port 8080...'));

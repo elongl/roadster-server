@@ -6,7 +6,6 @@ app.get('/user', (req, res) => {
   if (req.user === undefined) res.sendStatus(401);
   else res.send(req.user);
 });
-
 const redirectObject = {
   successRedirect: process.env.CLIENT_URL,
   failureRedirect: process.env.CLIENT_URL + '/login'

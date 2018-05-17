@@ -6,7 +6,7 @@ import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { googleConfig, facebookConfig, twitterConfig } from './authConfig';
 import addUser from '../database/functions/addUser';
 import UserDetails from '../database/typings/UserDetails';
-import findUserById from '../database/functions/findUserById';
+import findUserByOAuth from '../database/functions/findUserByOAuth';
 
 export default function registerStrategies() {
   passport.use(new GoogleStrategy(googleConfig, verify));
@@ -28,7 +28,7 @@ async function verify(
     displayName: profile.displayName,
     avatar: profile.photos && profile.photos[0].value
   };
-  const existingUser = await findUserById(authUser);
+  const existingUser = await findUserByOAuth(authUser);
   if (!existingUser) addUser(user, authUser);
   done(null, authUser);
 }
