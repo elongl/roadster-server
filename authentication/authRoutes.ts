@@ -3,7 +3,7 @@ import passport from 'passport';
 const app = express.Router();
 
 app.get('/user', (req, res) => {
-  if (req.user === undefined) res.sendStatus(401);
+  if (req.user === undefined) res.status(401).send('Unable to pull user from session.');
   else res.send(req.user);
 });
 const redirectObject = {

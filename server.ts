@@ -66,6 +66,7 @@ app.get('/closestrides/:longitude/:latitude', (req, res) => {
 
 app.get('/user/:id', async (req, res) => {
   const user = await findUserById(req.params.id);
+  if (user === undefined) res.status(404).send('User was not found.');
   res.send(user);
 });
 
