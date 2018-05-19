@@ -56,7 +56,7 @@ app.get('/waitingrides', (req, res) => {
   );
 });
 
-app.get('/closestrides/:longitude/:latitude', (req, res) => {
+app.get('/closestrides/:latitude/:longitude', (req, res) => {
   const location: Location = req.params;
   closestRides(location).then(
     (rides: RideDetails[] | undefined) => res.send(rides),
@@ -69,5 +69,4 @@ app.get('/user/:id', async (req, res) => {
   if (user === undefined) res.status(404).send('User was not found.');
   res.send(user);
 });
-
 app.listen(8080, () => console.log('Listening on port 8080...'));

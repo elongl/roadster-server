@@ -8,8 +8,8 @@ export default async function addRide(ride: RideDetails) {
       "INSERT INTO rides(rider_id, start_point, end_point, status) values ($1, $2, $3, 'Waiting');",
     values: [
       riderId,
-      `(${startPoint.longitude}, ${startPoint.latitude})`,
-      `(${endPoint.longitude}, ${endPoint.latitude})`
+      `(${startPoint.latitude}, ${startPoint.longitude})`,
+      `(${endPoint.latitude}, ${endPoint.longitude})`
     ]
   };
   await executeQuery(query);
