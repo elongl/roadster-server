@@ -2,14 +2,14 @@ import executeQuery from '../helpers/executeQuery';
 import RideDetails from '../typings/RideDetails';
 
 export default async function addRide(ride: RideDetails) {
-  const { riderId, startPoint, endPoint } = ride;
+  const { riderId, origin, destination } = ride;
   const query = {
     text:
-      "INSERT INTO rides(rider_id, start_point, end_point, status) values ($1, $2, $3, 'Waiting');",
+      "INSERT INTO rides(rider_id, origin, destination, status) values ($1, $2, $3, 'Waiting');",
     values: [
       riderId,
-      `(${startPoint.latitude}, ${startPoint.longitude})`,
-      `(${endPoint.latitude}, ${endPoint.longitude})`
+      `(${origin.latitude}, ${origin.longitude})`,
+      `(${destination.latitude}, ${destination.longitude})`
     ]
   };
   await executeQuery(query);
