@@ -59,4 +59,6 @@ app.get('/user/:id', async (req, res) => {
   if (user === undefined) res.status(404).send('User was not found.');
   res.send(user);
 });
+
+addRide({ riderId: 30, origin: 'Shoham Lakish 123', destination: 'Tel Aviv reines 23' });
 app.listen(8080, () => console.log('Listening on port 8080...'));

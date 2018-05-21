@@ -6,11 +6,7 @@ export default async function addRide(ride: RideDetails) {
   const query = {
     text:
       "INSERT INTO rides(rider_id, origin, destination, status) values ($1, $2, $3, 'Waiting');",
-    values: [
-      riderId,
-      `(${origin.latitude}, ${origin.longitude})`,
-      `(${destination.latitude}, ${destination.longitude})`
-    ]
+    values: [riderId, origin, destination]
   };
   await executeQuery(query);
 }
