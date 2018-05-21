@@ -12,6 +12,7 @@ import UserDetails from './database/typings/UserDetails';
 import middlewares from './middlewares';
 import updateUser from './database/functions/updateUser';
 import findUserById from './database/functions/findUserById';
+import getRide from './database/functions/getRide';
 const app = express();
 authConfig();
 
@@ -20,15 +21,12 @@ app.use('/auth', authRoutes);
 
 app.post('/ride', (req, res) => {
   const ride: RideDetails = req.body;
-  addRide(ride).then(() => res.sendStatus(200), err => res.send(err.message));
+  addRide(ride).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 app.patch('/matchdriver', (req, res) => {
   const matchedDriver: MatchedDriver = req.body;
-  matchDriver(matchedDriver).then(
-    () => res.sendStatus(200),
-    err => res.send(err.message)
-  );
+  matchDriver(matchedDriver).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 app.patch('/user', (req, res) => {
@@ -36,21 +34,21 @@ app.patch('/user', (req, res) => {
   const userId = req.user && req.user.id;
   updateUser(userId, changedProperties).then(
     () => res.sendStatus(200),
-    err => res.send(err.message)
+    err => res.send(err)
   );
 });
 
 app.get('/availabledrivers', (req, res) => {
   availableDrivers().then(
     (drivers: UserDetails[] | undefined) => res.send(drivers),
-    err => res.send(err.message)
+    err => res.send(err)
   );
 });
 
 app.get('/waitingrides', (req, res) => {
   waitingRides().then(
     (rides: RideDetails[] | undefined) => res.send(rides),
-    err => res.send(err.message)
+    err => res.send(err)
   );
 });
 
@@ -60,5 +58,8 @@ app.get('/user/:id', async (req, res) => {
   res.send(user);
 });
 
-addRide({ riderId: 30, origin: 'Shoham Lakish 123', destination: 'Tel Aviv reines 23' });
+app.get('/ride/:id', async (req, res) => {
+  getRide(req.params.id).then(ride => res.send(ride), err => res.status(404).send(err));
+});
+
 app.listen(8080, () => console.log('Listening on port 8080...'));
