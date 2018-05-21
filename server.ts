@@ -5,10 +5,8 @@ import matchDriver from './database/functions/matchDriver';
 import availableDrivers from './database/views/availableDrivers';
 import authRoutes from './authentication/authRoutes';
 import waitingRides from './database/views/waitingRides';
-import closestRides from './database/views/closestRides';
 import authConfig from './authentication/authConfig';
 import RideDetails from './database/typings/RideDetails';
-import Location from './database/typings/Location';
 import MatchedDriver from './database/typings/MatchedDriver';
 import UserDetails from './database/typings/UserDetails';
 import middlewares from './middlewares';
@@ -51,14 +49,6 @@ app.get('/availabledrivers', (req, res) => {
 
 app.get('/waitingrides', (req, res) => {
   waitingRides().then(
-    (rides: RideDetails[] | undefined) => res.send(rides),
-    err => res.send(err.message)
-  );
-});
-
-app.get('/closestrides/:latitude/:longitude', (req, res) => {
-  const location: Location = req.params;
-  closestRides(location).then(
     (rides: RideDetails[] | undefined) => res.send(rides),
     err => res.send(err.message)
   );
