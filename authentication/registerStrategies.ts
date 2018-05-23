@@ -28,7 +28,6 @@ async function verify(
     displayName: profile.displayName,
     avatar: profile.photos && profile.photos[0].value
   };
-  const existingUser = await findUserByOAuth(authUser);
-  if (!existingUser) addUser(user, authUser);
+  findUserByOAuth(authUser).catch(() => addUser(user, authUser));
   done(null, authUser);
 }

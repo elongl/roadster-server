@@ -12,7 +12,7 @@ export default function config() {
   });
 
   passport.deserializeUser((authUser: OAuthUserDetails, done) => {
-    findUserByOAuth(authUser).then(user => user !== undefined && done(null, user));
+    findUserByOAuth(authUser).then(user => done(null, user), err => done(err));
   });
   registerStrategies();
 }

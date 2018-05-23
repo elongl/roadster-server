@@ -52,10 +52,8 @@ app.get('/waitingrides', (req, res) => {
   );
 });
 
-app.get('/user/:id', async (req, res) => {
-  const user = await findUserById(req.params.id);
-  if (user === undefined) res.status(404).send('User was not found.');
-  res.send(user);
+app.get('/user/:id', (req, res) => {
+  findUserById(req.params.id).then(user => res.send(user), err => res.send(err));
 });
 
 app.get('/ride/:id', async (req, res) => {
