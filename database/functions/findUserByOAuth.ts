@@ -9,5 +9,5 @@ export default async function findUserByOAuth(user: OAuthUserDetails) {
 
   const identifiedUser = await executeQuery(query);
   if (identifiedUser.length) return identifiedUser[0];
-  return Promise.reject('User was not found.');
+  throw 'User was not found.';
 }

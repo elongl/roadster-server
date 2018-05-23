@@ -7,5 +7,5 @@ export default async function findUserById(id: number) {
 
   const user = await executeQuery(query);
   if (user.length) return user[0];
-  return Promise.reject('User was not found.');
+  throw 'User was not found.';
 }

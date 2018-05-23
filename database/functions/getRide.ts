@@ -6,5 +6,5 @@ export default async function getRide(id: number) {
   };
   const ride = await executeQuery(query);
   if (ride.length) return ride[0];
-  return Promise.reject('Ride was not found.');
+  throw 'Ride was not found.';
 }
