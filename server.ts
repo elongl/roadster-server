@@ -40,16 +40,13 @@ app.patch('/user', (req, res) => {
 
 app.get('/availabledrivers', (req, res) => {
   availableDrivers().then(
-    (drivers: UserDetails[] | undefined) => res.send(drivers),
+    (drivers: UserDetails[]) => res.send(drivers),
     err => res.send(err)
   );
 });
 
 app.get('/waitingrides', (req, res) => {
-  waitingRides().then(
-    (rides: RideDetails[] | undefined) => res.send(rides),
-    err => res.send(err)
-  );
+  waitingRides().then((rides: RideDetails[]) => res.send(rides), err => res.send(err));
 });
 
 app.get('/user/:id', (req, res) => {
