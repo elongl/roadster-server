@@ -6,9 +6,6 @@ import availableDrivers from './database/views/availableDrivers';
 import authRoutes from './authentication/authRoutes';
 import waitingRides from './database/views/waitingRides';
 import authConfig from './authentication/authConfig';
-import RideDetails from './database/typings/RideDetails';
-import MatchedDriver from './database/typings/MatchedDriver';
-import UserDetails from './database/typings/UserDetails';
 import middlewares from './middlewares';
 import updateUser from './database/functions/updateUser';
 import findUserById from './database/functions/findUserById';
@@ -20,13 +17,18 @@ app.use(middlewares);
 app.use('/auth', authRoutes);
 
 app.post('/ride', (req, res) => {
-  const ride: RideDetails = req.body;
-  addRide(ride).then(() => res.sendStatus(200), err => res.send(err));
+  const ride = req.body;
+  const riderId = req.user && req.user.id;
+  addRide(riderId, ride).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 app.patch('/matchdriver', (req, res) => {
-  const matchedDriver: MatchedDriver = req.body;
-  matchDriver(matchedDriver).then(() => res.sendStatus(200), err => res.send(err));
+  const matchedDriver = req.body;
+  const driverId = req.user && req.user.id;
+  matchDriver(driverId, matchedDriver).then(
+    () => res.sendStatus(200),
+    err => res.send(err)
+  );
 });
 
 app.patch('/user', (req, res) => {
@@ -39,14 +41,11 @@ app.patch('/user', (req, res) => {
 });
 
 app.get('/availabledrivers', (req, res) => {
-  availableDrivers().then(
-    (drivers: UserDetails[]) => res.send(drivers),
-    err => res.send(err)
-  );
+  availableDrivers().then(drivers => res.send(drivers), err => res.send(err));
 });
 
 app.get('/waitingrides', (req, res) => {
-  waitingRides().then((rides: RideDetails[]) => res.send(rides), err => res.send(err));
+  waitingRides().then(rides => res.send(rides), err => res.send(err));
 });
 
 app.get('/user/:id', (req, res) => {
