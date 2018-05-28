@@ -1,17 +1,23 @@
 require('dotenv').config();
-import express from 'express';
-import addRide from './database/functions/addRide';
-import matchDriver from './database/functions/matchDriver';
-import availableDrivers from './database/views/availableDrivers';
-import authRoutes from './authentication/authRoutes';
-import waitingRides from './database/views/waitingRides';
-import authConfig from './authentication/authConfig';
-import middlewares from './middlewares';
-import updateUser from './database/functions/updateUser';
 import findUserById from './database/functions/findUserById';
+import matchDriver from './database/functions/matchDriver';
+import waitingRides from './database/views/waitingRides';
+import updateUser from './database/functions/updateUser';
+import authRoutes from './authentication/authRoutes';
+import authConfig from './authentication/authConfig';
 import getRide from './database/functions/getRide';
+import addRide from './database/functions/addRide';
+import middlewares from './middlewares';
+import socket from 'socket.io';
+import express from 'express';
+import http from 'http';
+import getUserRide from './database/functions/getUserRide';
 const app = express();
+const server = http.createServer(app);
+const io = socket.listen(server);
 authConfig();
+
+io.on('connection', socket => console.log('hey'));
 
 app.use(middlewares);
 app.use('/auth', authRoutes);
@@ -40,10 +46,6 @@ app.patch('/user', (req, res) => {
   );
 });
 
-app.get('/availabledrivers', (req, res) => {
-  availableDrivers().then(drivers => res.send(drivers), err => res.send(err));
-});
-
 app.get('/waitingrides', (req, res) => {
   waitingRides().then(rides => res.send(rides), err => res.send(err));
 });
@@ -56,4 +58,11 @@ app.get('/ride/:id', async (req, res) => {
   getRide(req.params.id).then(ride => res.send(ride), err => res.status(404).send(err));
 });
 
-app.listen(8080, () => console.log('Listening on port 8080...'));
+app.get('/userride/:userid', async (req, res) => {
+  getUserRide(req.params.userid).then(
+    ride => res.send(ride),
+    err => res.status(404).send(err)
+  );
+});
+
+server.listen(8080, () => console.log('Listening on port 8080...'));
