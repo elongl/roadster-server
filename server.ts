@@ -2,7 +2,7 @@ require('dotenv').config();
 import findUserById from './database/functions/read/findUserById';
 import matchDriver from './database/functions/update/matchDriver';
 import getUserRide from './database/functions/read/getUserRide';
-import deleteRide from './database/functions/delete/deleteRide';
+import deleteRideByUserId from './database/functions/delete/deleteRideByUserId';
 import updateUser from './database/functions/update/updateUser';
 import addRide from './database/functions/create/addRide';
 import waitingRides from './database/views/waitingRides';
@@ -52,7 +52,10 @@ app.get('/waitingrides', (req, res) => {
 });
 
 app.get('/user/:id', (req, res) => {
-  findUserById(req.params.id).then(user => res.send(user), err => res.send(err));
+  findUserById(req.params.id).then(
+    user => res.send(user),
+    err => res.status(404).send(err)
+  );
 });
 
 app.get('/ride/:id', (req, res) => {
@@ -68,7 +71,7 @@ app.get('/userride/:userid', (req, res) => {
 
 app.delete('/ride', (req, res) => {
   const userId = req.user && req.user.id;
-  deleteRide(userId).then(() => res.sendStatus(200), err => res.send(err));
+  deleteRideByUserId(userId).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 console.clear();

@@ -11,6 +11,11 @@ const redirectObject = {
   failureRedirect: process.env.CLIENT_URL + '/login'
 };
 
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.sendStatus(200);
+});
+
 app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 app.get('/google/callback', passport.authenticate('google', redirectObject));
 
