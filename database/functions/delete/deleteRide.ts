@@ -1,4 +1,4 @@
-import executeQuery from '../helpers/executeQuery';
+import executeQuery from '../../helpers/executeQuery';
 
 export default async function deleteRide(riderId: number) {
   const query = {

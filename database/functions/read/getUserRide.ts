@@ -1,4 +1,4 @@
-import executeQuery from '../helpers/executeQuery';
+import executeQuery from '../../helpers/executeQuery';
 export default async function getUserRide(userId: number) {
   const query = {
     text: 'SELECT * FROM rides WHERE rider_id = $1',

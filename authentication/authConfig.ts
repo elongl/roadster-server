@@ -4,7 +4,7 @@ import { IOAuth2StrategyOption as GoogleOption } from 'passport-google-oauth';
 import { StrategyOption as FacebookOption } from 'passport-facebook';
 import { IStrategyOption as TwitterOption } from 'passport-twitter';
 import registerStrategies from './registerStrategies';
-import findUserByOAuth from '../database/functions/findUserByOAuth';
+import findUserByOAuth from '../database/functions/read/findUserByOAuth';
 
 export default function config() {
   passport.serializeUser((user: OAuthUserDetails, done) => {

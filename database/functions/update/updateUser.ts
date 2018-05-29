@@ -1,6 +1,6 @@
-import UserDetails from '../typings/UserDetails';
-import objectToString from '../../utils/objectToString';
-import executeQuery from '../helpers/executeQuery';
+import UserDetails from '../../typings/UserDetails';
+import objectToString from '../../../utils/objectToString';
+import executeQuery from '../../helpers/executeQuery';
 
 export default async function updateUser(
   userId: number,

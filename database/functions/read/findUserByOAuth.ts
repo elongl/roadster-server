@@ -1,5 +1,5 @@
-import OAuthUserDetails from '../typings/OAuthUserDetails';
-import executeQuery from '../helpers/executeQuery';
+import OAuthUserDetails from '../../typings/OAuthUserDetails';
+import executeQuery from '../../helpers/executeQuery';
 export default async function findUserByOAuth(user: OAuthUserDetails) {
   const query = {
     text:

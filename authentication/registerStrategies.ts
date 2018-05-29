@@ -4,9 +4,9 @@ import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { googleConfig, facebookConfig, twitterConfig } from './authConfig';
-import addUser from '../database/functions/addUser';
+import addUser from '../database/functions/create/addUser';
 import UserDetails from '../database/typings/UserDetails';
-import findUserByOAuth from '../database/functions/findUserByOAuth';
+import findUserByOAuth from '../database/functions/read/findUserByOAuth';
 
 export default function registerStrategies() {
   passport.use(new GoogleStrategy(googleConfig, verify));

@@ -1,5 +1,5 @@
-import executeQuery from '../helpers/executeQuery';
-import MatchedDriver from '../typings/MatchedDriver';
+import executeQuery from '../../helpers/executeQuery';
+import MatchedDriver from '../../typings/MatchedDriver';
 
 export default async function matchDriver(
   driverId: number,

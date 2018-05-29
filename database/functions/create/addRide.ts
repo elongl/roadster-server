@@ -1,5 +1,5 @@
-import executeQuery from '../helpers/executeQuery';
-import RideDetails from '../typings/RideDetails';
+import executeQuery from '../../helpers/executeQuery';
+import RideDetails from '../../typings/RideDetails';
 
 export default async function addRide(riderId: number, ride: Partial<RideDetails>) {
   const { origin, destination } = ride;
