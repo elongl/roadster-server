@@ -10,15 +10,13 @@ import getRide from './database/functions/read/getRide';
 import authRoutes from './authentication/authRoutes';
 import authConfig from './authentication/authConfig';
 import middlewares from './middlewares';
-import socket from 'socket.io';
+import io from 'socket.io';
 import express from 'express';
 import http from 'http';
 const app = express();
 const server = http.createServer(app);
-const io = socket.listen(server);
+const socket = io.listen(server);
 authConfig();
-
-io.on('connection', socket => console.log('hey'));
 
 app.use(middlewares);
 app.use('/auth', authRoutes);
@@ -26,14 +24,17 @@ app.use('/auth', authRoutes);
 app.post('/ride', (req, res) => {
   const ride = req.body;
   const riderId = req.user && req.user.id;
-  addRide(riderId, ride).then(() => res.sendStatus(200), err => res.send(err));
+  addRide(riderId, ride).then(ride => res.send(ride), err => res.send(err));
 });
 
 app.patch('/matchdriver', (req, res) => {
-  const matchedDriver = req.body;
+  const { rideId } = req.body;
   const driverId = req.user && req.user.id;
-  matchDriver(driverId, matchedDriver).then(
-    () => res.sendStatus(200),
+  matchDriver(driverId, rideId).then(
+    () => {
+      socket.emit(`matchdriver/${rideId}`);
+      res.sendStatus(200);
+    },
     err => res.send(err)
   );
 });
@@ -45,6 +46,11 @@ app.patch('/user', (req, res) => {
     () => res.sendStatus(200),
     err => res.send(err)
   );
+});
+
+app.delete('/ride', (req, res) => {
+  const userId = req.user && req.user.id;
+  deleteRideByUserId(userId).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 app.get('/waitingrides', (req, res) => {
@@ -67,11 +73,6 @@ app.get('/userride/:userid', (req, res) => {
     ride => res.send(ride),
     err => res.status(404).send(err)
   );
-});
-
-app.delete('/ride', (req, res) => {
-  const userId = req.user && req.user.id;
-  deleteRideByUserId(userId).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 console.clear();
