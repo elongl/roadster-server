@@ -21,7 +21,7 @@
   "scripts": {
     "start": "ts-node server",
     "deploy": "now && now alias",
-    "kill": "now rm roadster-server",
+    "predeploy": "now rm roadster-server",
     "scale": "now scale https://roadster-server.now.sh 3"
   },
   "devDependencies": {

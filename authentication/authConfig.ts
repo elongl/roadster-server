@@ -26,7 +26,8 @@ export const googleConfig: GoogleOption = {
 export const facebookConfig: FacebookOption = {
   clientID: process.env.FACEBOOK_CLIENT_ID || 'client id undefined',
   clientSecret: process.env.FACEBOOK_CLIENT_SECRET || 'client secret undefined',
-  callbackURL: process.env.FACEBOOK_CALLBACK_URL || 'callback url undefined'
+  callbackURL: process.env.FACEBOOK_CALLBACK_URL || 'callback url undefined',
+  profileFields: ['displayName', 'picture.type(large)']
 };
 
 export const twitterConfig: TwitterOption = {

@@ -24,10 +24,19 @@ async function verify(
     oauthId: profile.id,
     oauthProvider: profile.provider
   };
+  let avatar = profile.photos && profile.photos[0].value;
+  if (avatar) {
+    if (authUser.oauthProvider === 'google') {
+      avatar = avatar.substring(0, avatar.indexOf('?')) + '?sz=200';
+    } else if (authUser.oauthProvider === 'twitter') {
+      avatar = avatar.replace('_normal', '');
+    }
+  }
   const user: UserDetails = {
     displayName: profile.displayName,
-    avatar: profile.photos && profile.photos[0].value
+    avatar
   };
+
   findUserByOAuth(authUser).catch(() => addUser(user, authUser));
   done(null, authUser);
 }

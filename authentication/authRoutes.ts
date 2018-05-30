@@ -16,7 +16,12 @@ app.get('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
-app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+app.get(
+  '/google',
+  passport.authenticate('google', {
+    scope: 'https://www.googleapis.com/auth/plus.login'
+  })
+);
 app.get('/google/callback', passport.authenticate('google', redirectObject));
 
 app.get('/facebook', passport.authenticate('facebook'));
