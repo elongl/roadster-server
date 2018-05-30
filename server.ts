@@ -14,6 +14,8 @@ import io from 'socket.io';
 import express from 'express';
 import http from 'http';
 import getUserDrive from './database/functions/read/getUserDrive';
+import confirmRide from './database/functions/update/confirmRide';
+import completeRide from './database/functions/update/completeRide';
 const app = express();
 const server = http.createServer(app);
 const socket = io.listen(server);
@@ -26,6 +28,24 @@ app.post('/ride', (req, res) => {
   const ride = req.body;
   const riderId = req.user && req.user.id;
   addRide(riderId, ride).then(ride => res.send(ride), err => res.send(err));
+});
+
+app.post('/confirm', async (req, res) => {
+  const userId = req.user && req.user.id;
+  const { id: rideId } = await getUserRide(userId);
+  confirmRide(rideId).then(
+    () => {
+      socket.emit(`confirm/${rideId}`);
+      res.sendStatus(200);
+    },
+    err => res.send(err)
+  );
+});
+
+app.patch('/completeride', async (req, res) => {
+  const userId = req.user && req.user.id;
+  const { id: rideId } = await getUserRide(userId);
+  completeRide(rideId).then(() => res.sendStatus(200), err => res.send(err));
 });
 
 app.patch('/matchdriver', (req, res) => {
