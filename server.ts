@@ -13,6 +13,7 @@ import middlewares from './middlewares';
 import io from 'socket.io';
 import express from 'express';
 import http from 'http';
+import getUserDrive from './database/functions/read/getUserDrive';
 const app = express();
 const server = http.createServer(app);
 const socket = io.listen(server);
@@ -73,6 +74,11 @@ app.get('/userride/:userid', (req, res) => {
     ride => res.send(ride),
     err => res.status(404).send(err)
   );
+});
+
+app.get('/userdrive', (req, res) => {
+  const userId = req.user && req.user.id;
+  getUserDrive(userId).then(ride => res.send(ride), err => res.status(404).send(err));
 });
 
 console.clear();
