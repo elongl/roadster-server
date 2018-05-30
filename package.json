@@ -41,7 +41,7 @@
   },
   "now": {
     "alias": "roadster-server",
-    "dotenv": true,
+    "dotenv": ".env.production",
     "public": true
   }
 }
