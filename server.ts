@@ -16,6 +16,7 @@ import http from 'http';
 import getUserDrive from './database/functions/read/getUserDrive';
 import confirmRide from './database/functions/update/confirmRide';
 import completeRide from './database/functions/update/completeRide';
+import unmatchDriver from './database/functions/update/unmatchDriver';
 const app = express();
 const server = http.createServer(app);
 const socket = io.listen(server);
@@ -27,7 +28,13 @@ app.use('/auth', authRoutes);
 app.post('/ride', (req, res) => {
   const ride = req.body;
   const riderId = req.user && req.user.id;
-  addRide(riderId, ride).then(ride => res.send(ride), err => res.send(err));
+  addRide(riderId, ride).then(
+    ride => {
+      socket.emit('rideslist_changed');
+      res.send(ride);
+    },
+    err => res.send(err)
+  );
 });
 
 app.post('/confirm', async (req, res) => {
@@ -44,8 +51,13 @@ app.post('/confirm', async (req, res) => {
 
 app.patch('/completeride', async (req, res) => {
   const userId = req.user && req.user.id;
-  const { id: rideId } = await getUserRide(userId);
-  completeRide(rideId).then(() => res.sendStatus(200), err => res.send(err));
+  try {
+    const { id: rideId } = await getUserRide(userId);
+    completeRide(rideId).then(() => res.sendStatus(200), err => res.send(err));
+  } catch (ex) {
+    const { id: rideId } = await getUserDrive(userId);
+    completeRide(rideId).then(() => res.sendStatus(200), err => res.send(err));
+  }
 });
 
 app.patch('/matchdriver', (req, res) => {
@@ -54,6 +66,20 @@ app.patch('/matchdriver', (req, res) => {
   matchDriver(driverId, rideId).then(
     () => {
       socket.emit(`matchdriver/${rideId}`);
+      socket.emit('rideslist_changed');
+      res.sendStatus(200);
+    },
+    err => res.send(err)
+  );
+});
+
+app.patch('/unmatchdriver', async (req, res) => {
+  const driverId = req.user && req.user.id;
+  const { id: rideId } = await getUserDrive(driverId);
+  unmatchDriver(driverId).then(
+    () => {
+      socket.emit(`unmatchdriver/${rideId}`);
+      socket.emit('rideslist_changed');
       res.sendStatus(200);
     },
     err => res.send(err)
@@ -69,9 +95,17 @@ app.patch('/user', (req, res) => {
   );
 });
 
-app.delete('/ride', (req, res) => {
+app.delete('/ride', async (req, res) => {
   const userId = req.user && req.user.id;
-  deleteRideByUserId(userId).then(() => res.sendStatus(200), err => res.send(err));
+  const { id: rideId } = await getUserRide(userId);
+  deleteRideByUserId(userId).then(
+    () => {
+      socket.emit(`cancel/${rideId}`);
+      socket.emit('rideslist_changed');
+      res.sendStatus(200);
+    },
+    err => res.send(err)
+  );
 });
 
 app.get('/waitingrides', (req, res) => {

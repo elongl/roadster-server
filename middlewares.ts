@@ -3,7 +3,10 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
 const middlewares = [
-  cors({ origin: process.env.CLIENT_URL, credentials: true }),
+  cors({
+    origin: [`${process.env.CLIENT_URL}`, 'https://roadster.netlify.com'],
+    credentials: true
+  }),
   bodyParser.json(),
   cookieSession({
     name: 'user-session',
