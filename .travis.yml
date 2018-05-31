@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "node"
+cache:
+  yarn: true
+  directories:
+    - "node_modules"
+before_deploy: yarn add now
+deploy:
+  - provider: script
+    script: yarn deploy
+    on:
+      master: true
