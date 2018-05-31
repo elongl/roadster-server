@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '.env.development' });
 import findUserById from './database/functions/read/findUserById';
 import matchDriver from './database/functions/update/matchDriver';
 import getUserRide from './database/functions/read/getUserRide';
@@ -134,6 +134,5 @@ app.get('/userdrive', (req, res) => {
   const userId = req.user && req.user.id;
   getUserDrive(userId).then(ride => res.send(ride), err => res.status(404).send(err));
 });
-
 console.clear();
 server.listen(8080, () => console.log('Listening on port 8080...'));
