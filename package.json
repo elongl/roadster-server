@@ -20,9 +20,7 @@
   },
   "scripts": {
     "start": "ts-node server",
-    "deploy": "now && now alias",
-    "predeploy": "now rm roadster-server",
-    "scale": "now scale https://roadster-server.now.sh 3"
+    "deploy": "now && now alias"
   },
   "devDependencies": {
     "@types/cookie-session": "^2.0.34",
