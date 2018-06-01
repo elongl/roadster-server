@@ -1,7 +1,7 @@
 import { Client } from 'pg';
 import { toCamelCase } from '../../utils/mapObject';
 export default async function executeQuery(query: Query) {
-  const { DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD, DB_SSL, NODE_ENV } = process.env;
+  const { DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD, DB_SSL } = process.env;
   const client = new Client({
     host: DB_HOST,
     database: DB_DATABASE || 'roadster',
