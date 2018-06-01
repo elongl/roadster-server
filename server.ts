@@ -53,10 +53,22 @@ app.patch('/completeride', async (req, res) => {
   const userId = req.user && req.user.id;
   try {
     const { id: rideId } = await getUserRide(userId);
-    completeRide(rideId).then(() => res.sendStatus(200), err => res.send(err));
+    completeRide(rideId).then(
+      () => {
+        socket.emit(`complete/${rideId}`);
+        res.sendStatus(200);
+      },
+      err => res.send(err)
+    );
   } catch (ex) {
     const { id: rideId } = await getUserDrive(userId);
-    completeRide(rideId).then(() => res.sendStatus(200), err => res.send(err));
+    completeRide(rideId).then(
+      () => {
+        socket.emit(`complete/${rideId}`);
+        res.sendStatus(200);
+      },
+      err => res.send(err)
+    );
   }
 });
 
