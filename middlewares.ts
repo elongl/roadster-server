@@ -4,7 +4,7 @@ import cors from 'cors';
 import passport from 'passport';
 const middlewares = [
   cors({
-    origin: [`${process.env.CLIENT_URL}`, 'https://roadster.netlify.com'],
+    origin: [process.env.CLIENT_URL as string, 'https://roadster.netlify.com'],
     credentials: true
   }),
   bodyParser.json(),

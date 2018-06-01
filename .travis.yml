@@ -13,3 +13,4 @@ deploy:
     script: now -t $NOW_TOKEN && now alias -t $NOW_TOKEN
     on:
       master: true
+      
