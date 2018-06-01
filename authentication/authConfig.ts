@@ -7,13 +7,11 @@ import registerStrategies from './registerStrategies';
 import findUserByOAuth from '../database/functions/read/findUserByOAuth';
 
 export default function config() {
-  passport.serializeUser((user: OAuthUserDetails, done) => {
-    done(null, user);
-  });
+  passport.serializeUser((authUser: OAuthUserDetails, done) => done(null, authUser));
 
-  passport.deserializeUser((authUser: OAuthUserDetails, done) => {
-    findUserByOAuth(authUser).then(user => done(null, user), err => done(err));
-  });
+  passport.deserializeUser((authUser: OAuthUserDetails, done) =>
+    findUserByOAuth(authUser).then(user => done(null, user), err => done(null, false))
+  );
   registerStrategies();
 }
 
