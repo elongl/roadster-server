@@ -10,6 +10,6 @@ before_deploy: yarn add now
 deploy:
   - provider: script
     skip_cleanup: true
-    script: yarn deploy
+    script: now -t $NOW_TOKEN && now alias -t $NOW_TOKEN
     on:
       master: true
