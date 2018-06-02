@@ -1,4 +1,4 @@
-import UserDetails from '../../typings/UserDetails';
+import UserDetails from '../../types/UserDetails';
 import objectToString from '../../../utils/objectToString';
 import executeQuery from '../../helpers/executeQuery';
 

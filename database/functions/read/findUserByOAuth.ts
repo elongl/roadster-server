@@ -1,4 +1,4 @@
-import OAuthUserDetails from '../../typings/OAuthUserDetails';
+import OAuthUserDetails from '../../types/OAuthUserDetails';
 import executeQuery from '../../helpers/executeQuery';
 export default async function findUserByOAuth(user: OAuthUserDetails) {
   const query = {
