@@ -88,7 +88,7 @@ app.patch('/matchdriver', (req, res) => {
 app.patch('/unmatchdriver', async (req, res) => {
   const driverId = req.user && req.user.id;
   const { id: rideId } = await getUserDrive(driverId);
-  unmatchDriver(driverId).then(
+  unmatchDriver(rideId).then(
     () => {
       socket.emit(`unmatchdriver/${rideId}`);
       socket.emit('rideslist_changed');
